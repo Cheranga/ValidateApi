@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ValidateApi.Configs;
 using ValidateApi.Exceptions;
+using ValidateApi.Filters;
 using ValidateApi.Services;
 
 namespace ValidateApi
@@ -34,18 +35,13 @@ namespace ValidateApi
 
         public void RegisterDependencies(IServiceCollection services)
         {
-            services.AddScoped<INotificationService, NotificationService>();
-
             services.Configure<NotificationServiceConfig>(Configuration.GetSection("Notification"));
-            services.AddSingleton(provider =>
-            {
-                var config = provider.GetRequiredService<IOptions<NotificationServiceConfig>>().Value;
-                if ( config == null || !config.IsValid())
-                {
-                    throw new InvalidConfigurationException(typeof(NotificationServiceConfig), "Invalid config");
-                }
-                return config;
-            });
+            services.AddSingleton(provider => provider.GetRequiredService<IOptions<NotificationServiceConfig>>().Value);
+
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddSingleton<IValidateConfig, NotificationServiceConfig>();
+
+            services.AddTransient<IStartupFilter, ValidateConfigurationFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
