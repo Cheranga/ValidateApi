@@ -15,10 +15,7 @@ namespace ValidateApi.Services
 
         public NotificationService(NotificationServiceConfig config)
         {
-            if (config == null || !config.IsValid())
-            {
-                throw new InvalidConfigurationException(typeof(NotificationServiceConfig), "Invalid configuration");
-            }
+            _config = config;
         }
 
         public Task<bool> SendNotificationAsync(SendNotificationRequest request)

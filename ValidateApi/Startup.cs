@@ -40,7 +40,7 @@ namespace ValidateApi
             services.AddSingleton(provider =>
             {
                 var config = provider.GetRequiredService<IOptions<NotificationServiceConfig>>().Value;
-                if (!config.IsValid())
+                if ( config == null || !config.IsValid())
                 {
                     throw new InvalidConfigurationException(typeof(NotificationServiceConfig), "Invalid config");
                 }
