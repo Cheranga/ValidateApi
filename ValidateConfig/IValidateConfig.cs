@@ -1,4 +1,4 @@
-﻿namespace ValidateApi.Configs
+﻿namespace ValidateConfig
 {
     public interface IValidateConfig
     {   

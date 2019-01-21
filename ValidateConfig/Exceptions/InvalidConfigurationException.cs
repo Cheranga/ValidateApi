@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ValidateApi.Exceptions
+namespace ValidateConfig.Exceptions
 {
     public class InvalidConfigurationException : Exception
     {

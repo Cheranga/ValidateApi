@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using ValidateApi.Configs;
 using ValidateApi.Controllers;
 using ValidateApi.DTO;
-using ValidateApi.Exceptions;
 
 namespace ValidateApi.Services
 {

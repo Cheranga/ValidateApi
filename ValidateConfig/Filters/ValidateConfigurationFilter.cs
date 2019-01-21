@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using ValidateApi.Configs;
-using ValidateApi.Exceptions;
+using ValidateConfig.Exceptions;
 
-namespace ValidateApi.Filters
+namespace ValidateConfig.Filters
 {
-    public class ValidateConfigurationFilter : IStartupFilter
+    internal class ValidateConfigurationFilter : IStartupFilter
     {
         private readonly IEnumerable<IValidateConfig> _configsToValidate;
 

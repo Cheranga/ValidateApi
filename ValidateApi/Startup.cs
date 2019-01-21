@@ -1,19 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using ValidateApi.Configs;
-using ValidateApi.Exceptions;
-using ValidateApi.Filters;
 using ValidateApi.Services;
+using ValidateConfig;
 
 namespace ValidateApi
 {
@@ -35,13 +27,10 @@ namespace ValidateApi
 
         public void RegisterDependencies(IServiceCollection services)
         {
-            services.Configure<NotificationServiceConfig>(Configuration.GetSection("Notification"));
-            services.AddSingleton(provider => provider.GetRequiredService<IOptions<NotificationServiceConfig>>().Value);
+            services.RegisterConfig<NotificationServiceConfig>(Configuration, "Notification")
+                .ValidateConfigs();
 
-            services.AddScoped<INotificationService, NotificationService>();
-            services.AddSingleton<IValidateConfig, NotificationServiceConfig>();
-
-            services.AddTransient<IStartupFilter, ValidateConfigurationFilter>();
+            services.AddTransient<INotificationService, NotificationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
